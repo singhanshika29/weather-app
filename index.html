@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Weather </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <style>
+        :root {
+            --bg-soft: #e0e0e0;
+            --shadow-dark: #bebebe;
+            --shadow-light: #ffffff;
+        }
+
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .video-bg {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1;
+            filter: brightness(0.7);
+            object-fit: cover;
+        }
+
+        .container-wrapper {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .weather-card-soft {
+            width: 100%;
+            max-width: 450px;
+            backdrop-filter: blur(10px);
+            border-radius: 40px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 20px 20px 60px rgba(0, 0, 0, 0.3),
+                -5px -5px 20px rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: transform 0.3s ease;
+        }
+
+        .weather-card-soft:hover {
+            transform: translateY(-5px);
+        }
+
+        .search-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .search-input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 15px;
+            padding: 12px 20px;
+            color: white;
+            box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.2),
+                inset -4px -4px 8px rgba(255, 255, 255, 0.05);
+            outline: none;
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .btn-soft {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 15px;
+            padding: 0 20px;
+            color: white;
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+            transition: 0.2s;
+        }
+
+        .btn-soft:hover {
+            background: #FFC107;
+            color: #222;
+        }
+
+        .icon-container-soft {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: inset 6px 6px 12px rgba(0, 0, 0, 0.2),
+                inset -6px -6px 12px rgba(255, 255, 255, 0.1);
+        }
+
+        .weather-icon1 {
+            width: 80px;
+            filter: drop-shadow(0px 0px 10px rgba(255, 193, 7, 0.5));
+            animation: float 4s infinite ease-in-out;
+        }
+
+        .temp-soft {
+            font-size: 5rem;
+            font-weight: 700;
+            margin: 0;
+            text-shadow: 2px 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .city {
+            font-size: 1.5rem;
+            text-transform: capitalize;
+            letter-spacing: 1px;
+            opacity: 0.9;
+        }
+
+        .detail-box-soft {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 20px;
+            transition: 0.3s;
+        }
+
+        .detail-box-soft:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .detail-box-soft i {
+            font-size: 1.5rem;
+            color: #FFC107;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <video autoplay muted loop playsinline class="video-bg">
+        <source src="./image/4b698672e6b8cee139d3bd1f8a1a5d37.mp4" type="video/mp4">
+    </video>
+
+    <div class="container-wrapper">
+        <div class="weather-card-soft">
+
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Enter City Name">
+                <button type="submit" class="btn-soft">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+
+            <div class="main-weather-soft text-center">
+                <div class="icon-container-soft">
+                    <img src="./image/clear.png" alt="weather" class="weather-icon1"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                    <i class="bi bi-sun-fill text-warning" style="font-size: 3rem; display:none;"></i>
+                </div>
+
+                <h1 class="temp-soft">29°C</h1>
+                <p class="city">Lucknow</p>
+                <p class="text-white-50 current-date">Loading date...</p>
+            </div>
+
+            <hr class="my-4 opacity-25">
+
+            <div class="row g-3 text-center">
+                <div class="col-4">
+                    <div class="detail-box-soft">
+                        <i class="bi bi-wind"></i>
+                        <small class="d-block text-white-50">Wind</small>
+                        <strong class="wind">3 km/h</strong>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="detail-box-soft">
+                        <i class="bi bi-droplet-half"></i>
+                        <small class="d-block text-white-50">Humidity</small>
+                        <strong class="humidity">40%</strong>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="detail-box-soft">
+                        <i class="bi bi-droplet-half"></i>
+                        <small class="d-block text-white-50">Pressure</small>
+                        <strong class="pressure">742 hPa</strong>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <script>
+        const apiKey = "ba10137d5f18fcb28e192ad009428f28";
+        const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+
+        const searchBox = document.querySelector(".search-input");
+        const searchBtn = document.querySelector(".btn-soft");
+
+        // --- NEW FUNCTION TO UPDATE DATE ---
+        function updateCurrentDate() {
+            const dateElement = document.querySelector(".current-date");
+            const now = new Date();
+            
+            // Options to format the date like "Wednesday, 7 July"
+            const options = { weekday: 'long', day: 'numeric', month: 'long' };
+            const formattedDate = now.toLocaleDateString('en-US', options);
+            
+            dateElement.innerHTML = formattedDate;
+        }
+
+        // Call the date function immediately when page loads
+        updateCurrentDate();
+
+        async function fetchWeather(city) {
+            if (!city) return;
+
+            try {
+                const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
+                const data = await response.json();
+
+                if (response.status == 404) {
+                    alert("City not found!");
+                    return;
+                }
+
+                // Update UI
+                document.querySelector(".city").innerHTML = data.name;
+                document.querySelector(".temp-soft").innerHTML = Math.round(data.main.temp) + "°C";
+                document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
+                document.querySelector(".wind").innerHTML = data.wind.speed + " km/h";
+                document.querySelector(".pressure").innerHTML = data.main.pressure + " hPa";
+
+                // Weather Icon Logic
+                const icon = document.querySelector(".weather-icon1");
+                const mainWeather = data.weather[0].main;
+
+                const weatherImages = {
+                    "Clouds": "clouds.png",
+                    "Clear": "clear.png",
+                    "Rain": "rain.png",
+                    "Drizzle": "drizzle.png",
+                    "Mist": "mist.png",
+                    "Snow": "snow.png"
+                };
+
+                icon.src = `./image/${weatherImages[mainWeather] || 'clear.png'}`;
+                icon.style.display = "block";
+
+            } catch (error) {
+                console.error("Error fetching weather:", error);
+            }
+        }
+
+        searchBtn.addEventListener("click", () => {
+            fetchWeather(searchBox.value);
+        });
+
+        searchBox.addEventListener("keypress", (event) => {
+            if (event.key === "Enter") {
+                fetchWeather(searchBox.value);
+            }
+        });
+    </script>
+
+</body>
+
+</html>
