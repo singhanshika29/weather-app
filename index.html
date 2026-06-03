@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather App</title>
-    <!-- Combined and cleaned up Bootstrap links -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
@@ -18,56 +17,67 @@
 
         body,
         html {
-            min-height: 100%;
+            min-height: 100vh;
             margin: 0;
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            /* Removed overflow: hidden to allow scrolling on small landscape phones */
+            background-color: #111; /* Fallback color */
         }
 
         .video-bg {
             position: fixed;
             right: 0;
             bottom: 0;
-            min-width: 100%;
-            min-height: 100%;
+            width: 100%;
+            height: 100%;
             z-index: -1;
-            filter: brightness(0.6);
+            filter: brightness(0.5);
             object-fit: cover;
         }
 
         .container-wrapper {
             min-height: 100vh;
+            width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
             background: rgba(0, 0, 0, 0.3);
-            padding: 20px; /* Padding for mobile edges */
+            padding: 15px; /* Ensures spacing on extremely small screens */
         }
 
         .weather-card-soft {
             width: 100%;
-            max-width: 450px;
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-radius: 30px;
-            padding: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 460px; /* Standard optimized width for desktop/tablet viewports */
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
             color: white;
             transition: transform 0.3s ease;
         }
 
-        /* Responsive adjustments for very small screens */
-        @media (max-width: 400px) {
+        /* Responsive Breakpoints */
+        @media (min-width: 576px) {
             .weather-card-soft {
-                padding: 20px;
-                border-radius: 20px;
+                padding: 35px;
+                border-radius: 30px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .weather-card-soft {
+                padding: 16px;
+                border-radius: 16px;
             }
             .temp-soft {
-                font-size: 3.5rem !important;
+                font-size: 3.2rem !important;
             }
             .detail-box-soft {
-                padding: 10px 5px !important;
+                padding: 10px 4px !important;
+            }
+            .detail-box-soft strong {
+                font-size: 0.85rem;
             }
         }
 
@@ -82,9 +92,10 @@
             background: rgba(255, 255, 255, 0.15);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
-            padding: 10px 15px;
+            padding: 12px 15px;
             color: white;
             outline: none;
+            font-size: 1rem;
         }
 
         .search-input::placeholder {
@@ -95,19 +106,19 @@
             background: #FFC107;
             border: none;
             border-radius: 12px;
-            padding: 0 15px;
+            padding: 0 18px;
             color: #222;
-            transition: 0.3s;
+            transition: all 0.3s ease;
         }
 
         .btn-soft:hover {
             background: #ffdb70;
-            transform: scale(1.05);
+            transform: scale(1.03);
         }
 
         .icon-container-soft {
-            width: 100px;
-            height: 100px;
+            width: 90px;
+            height: 90px;
             border-radius: 50%;
             margin: 0 auto 15px;
             display: flex;
@@ -117,41 +128,47 @@
         }
 
         .weather-icon1 {
-            width: 70px;
+            width: 65px;
+            height: auto;
             filter: drop-shadow(0px 0px 8px rgba(255, 193, 7, 0.4));
             animation: float 4s infinite ease-in-out;
         }
 
         .temp-soft {
-            font-size: 4.5rem;
+            font-size: 4.2rem;
             font-weight: 700;
             margin: 0;
-            line-height: 1;
+            line-height: 1.1;
         }
 
         .city {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             text-transform: capitalize;
             margin-top: 5px;
-            opacity: 0.9;
+            font-weight: 500;
         }
 
         .detail-box-soft {
             background: rgba(255, 255, 255, 0.08);
-            padding: 15px 10px;
-            border-radius: 15px;
-            height: 100%; /* Ensures all boxes are same height in row */
+            padding: 12px 8px;
+            border-radius: 14px;
+            height: 100%; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .detail-box-soft i {
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             color: #FFC107;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
 
         @keyframes float {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-8px); }
         }
     </style>
 </head>
@@ -166,8 +183,8 @@
         <div class="weather-card-soft">
 
             <div class="search-container">
-                <input type="text" class="search-input" placeholder="Enter City Name">
-                <button type="submit" class="btn-soft">
+                <input type="text" class="search-input" placeholder="Enter City Name" aria-label="City Name">
+                <button type="button" class="btn-soft" aria-label="Search">
                     <i class="bi bi-search"></i>
                 </button>
             </div>
@@ -176,7 +193,7 @@
                 <div class="icon-container-soft">
                     <img src="./image/clear.png" alt="weather" class="weather-icon1"
                         onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
-                    <i class="bi bi-sun-fill text-warning" style="font-size: 3rem; display:none;"></i>
+                    <i class="bi bi-sun-fill text-warning" style="font-size: 2.5rem; display:none;"></i>
                 </div>
 
                 <h1 class="temp-soft">29°C</h1>
@@ -186,7 +203,7 @@
 
             <hr class="my-4 opacity-25">
 
-            <div class="row g-2 g-md-3 text-center">
+            <div class="row g-2 text-center">
                 <div class="col-4">
                     <div class="detail-box-soft">
                         <i class="bi bi-wind"></i>
@@ -231,10 +248,10 @@
         updateCurrentDate();
 
         async function fetchWeather(city) {
-            if (!city) return;
+            if (!city.trim()) return;
 
             try {
-                const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
+                const response = await fetch(apiUrl + encodeURIComponent(city) + `&appid=${apiKey}`);
                 const data = await response.json();
 
                 if (response.status == 404) {
@@ -249,6 +266,7 @@
                 document.querySelector(".pressure").innerHTML = data.main.pressure;
 
                 const icon = document.querySelector(".weather-icon1");
+                const fallbackIcon = icon.nextElementSibling;
                 const mainWeather = data.weather[0].main;
 
                 const weatherImages = {
@@ -260,8 +278,11 @@
                     "Snow": "snow.png"
                 };
 
-                icon.src = `./image/${weatherImages[mainWeather] || 'clear.png'}`;
+                // Reset fallback visibility state before trying new image
                 icon.style.display = "block";
+                fallbackIcon.style.display = "none";
+                
+                icon.src = `./image/${weatherImages[mainWeather] || 'clear.png'}`;
 
             } catch (error) {
                 console.error("Error fetching weather:", error);
